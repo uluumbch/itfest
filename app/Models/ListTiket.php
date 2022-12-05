@@ -9,4 +9,12 @@ class ListTiket extends Model
 {
     use HasFactory;
     protected $table = "list_tiket";
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nama_tiket',
+        'desc_tiket',
+        'gambar_tiket',
+        'harga_tiket'
+    ];
 }

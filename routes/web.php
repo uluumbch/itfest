@@ -180,9 +180,38 @@ Route::get('/admintiket', function () {
 Route::get('/admintambahtiket', function () {
     return view('admin.tambahtiket');
 })->middleware('auth')->name('admintambahtiket');
-Route::post('/admintambahtiket', function () {
-    return view('admin.tambahtiket');
+
+Route::post('/admintambahtiket', function (Request $request) {
+    $request->validate([
+        'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        'nama_tiket' => 'required|string',
+        'harga_tiket' => 'required|integer',
+        'desc' => 'required|string',
+    ], [
+            'gambar.required' => 'Gambar harus diisi',
+            'gambar.image' => 'Gambar harus berupa gambar',
+            'gambar.mimes' => 'Gambar harus berupa jpeg,png,jpg',
+            'gambar.max' => 'Gambar maksimal 10MB',
+            'nama_tiket.required' => 'Nama tiket harus diisi',
+            'nama_tiket.string' => 'Nama tiket harus berupa string',
+            'harga_tiket.required' => 'Harga tiket harus diisi',
+            'harga_tiket.integer' => 'Harga tiket harus berupa angka',
+            'desc.required' => 'Deskripsi tiket harus diisi',
+            'desc.string' => 'Deskripsi tiket harus berupa string',
+        ]);
+
+    $imageName = 'tiket_' . time() . '.' . $request->gambar->extension();
+
+    $request->gambar->move(public_path('images'), $imageName);
+    ListTiket::create([
+        'nama_tiket' => $request->nama_tiket,
+        'harga_tiket' => $request->harga_tiket,
+        'desc_tiket' => $request->desc,
+        'gambar_tiket' => $imageName
+    ]);
+    return back()->with('berhasil', $request->nama_tiket . ' telah ditambahkan');
 })->middleware('auth')->name('uptiket');
+
 Route::post('/adminubahstatus', function () {
     DB::update('update list_tiket set status_tiket = ? where id = ?', [$_POST['status'], $_POST['id']]);
     return response()->json(['status' => 'berhasil']);

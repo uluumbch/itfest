@@ -145,7 +145,7 @@
     @foreach($data as $item)
             <div class="max-w-sm border border-secondary rounded-lg shadow-md bg-accent my-3">
                 <a href="/itmatsuri/tiket/{{$item->id}}">
-                    <img class="rounded-t-lg" src="{{ asset('assets/'.$item->gambar_tiket) }}" alt="" />
+                    <img class="rounded-t-lg" src="{{ asset('images/'.$item->gambar_tiket) }}" alt="" />
                 </a>
                 <div class="p-5">
                     <a href="/itmatsuri/tiket/{{$item->id}}">

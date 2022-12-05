@@ -1,6 +1,6 @@
 @extends('admin.template')
 @section('container')
-<form action="{{route('adminubahstatus')}}" class="grid justify-center" method="POST" enctype="multipart/form-data">
+<form action="{{route('uptiket')}}" class="grid justify-center" method="POST" enctype="multipart/form-data">
     @csrf
     <label for="nama_tiket" class="text-slate-100">Nama Tiket</label>
     @error('nama_tiket')
@@ -9,23 +9,15 @@
     <input
         type="text"
         class="form-input rounded mb-2 max-w-sm"
-        name="status"
+        name="nama_tiket"
     />
-    <input
-        type="text"
-        class="form-input rounded mb-2 max-w-sm"
-        name="id"
-        value="1"
-    />
-    {{-- <label for="desc" class="text-slate-100">Deskripsi</label>
+    <label for="desc" class="text-slate-100">Deskripsi</label>
     @error('desc')
     <p class="text-red-500">{{ $message }}</p>
     @enderror
-    <textarea class="form-input rounded mb-2 max-w-sm" name="desc">
+    <textarea class="form-input rounded mb-2 max-w-sm" name="desc"></textarea>
 
-    </textarea>
-
-    <label for="nama_tiket" class="text-slate-100">Harga Tiket</label>
+    <label for="harga_tiket" class="text-slate-100">Harga Tiket</label>
     @error('harga_tiket')
     <p class="text-red-500">{{ $message }}</p>
     @enderror
@@ -51,13 +43,13 @@
         id="file_input_help"
     >
         PNG atau JPG.
-    </p> --}}
+    </p>
 
     <button
         type="submit"
         class="text-slate-50 bg-accent rounded max-w-sm p-1 mt-4"
     >
-        Upload
+        Tambah
     </button>
 </form>
 @endsection
