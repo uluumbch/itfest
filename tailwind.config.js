@@ -12,12 +12,12 @@ module.exports = {
         secondary: "#FFC600",
         secondarydarker: "#D2A60E",
         accent: "#E900FF",
-          itmprimary: "#ffb9b9",
-          itmsecondary: "#ffddd2",
-          itmthird: "#ffacc7",
-          itmfourth: "#ff8dc7",
-          itmaccent: "#ff1e00",
-          itmaccentsec: "#5deafe"
+        itmprimary: "#ffb9b9",
+        itmsecondary: "#ffddd2",
+        itmthird: "#ffacc7",
+        itmfourth: "#ff8dc7",
+        itmaccent: "#ff1e00",
+        itmaccentsec: "#5deafe"
       },
       dropShadow: {
         custom: "0  2px 10px rgba(0,0,0,0.25)",

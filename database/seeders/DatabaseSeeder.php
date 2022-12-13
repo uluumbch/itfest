@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'username' => "ITFEST22",
-            'email' => "halo.uluum@gmail.com",
+            'email' => "hmti.ft@ulm.ac.id",
             'password' => bcrypt('HMTIFTULM')
         ]);
     }

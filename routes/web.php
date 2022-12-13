@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\PesertaVoting;
 use App\Models\Tiket;
+use App\Models\PesertaVoteSing;
 
 
 /*
@@ -108,12 +109,92 @@ Route::get('/status-pembayaran', function (Request $request) {
 // route untuk vote
 
 Route::get('/itmatsuri/vote', function () {
-    return view(
-        'vote',
-        [
-            'data' => PesertaVoting::all()
-        ]
-    );
+    return view('vote.index');
+});
+
+// ROUTE VOTE SING
+Route::get('/itmatsuri/vote/sing', function(){
+    return view('vote.singer', [
+        'data' => PesertaVoteSing::all()
+    ]);
+});
+
+Route::get('/itmatsuri/vote/sing/hasil', function(){
+    return view('vote.hasil-singer', [
+        'data' => PesertaVoteSing::all()->sortByDesc('jumlah_vote')
+    ]);
+});
+
+Route::post('/submitvotesing', function (Request $request) {
+    $hasil = DB::select('select * from tiket where kode_tiket = :kode_tiket', ['kode_tiket' => $_POST['kode_tiket']]);
+    if ($hasil) {
+        if ($hasil[0]->status == 1) {
+            return response()->json(['status' => false, 'message' => 'Kode Telah digunakan'], 200);
+        } else {
+            // update DB tiket and peserta_voting
+            DB::update('update peserta_vote_sings set jumlah_vote = jumlah_vote + 1 where id = ?', [$_POST['vote']]);
+            DB::update('update tiket set status = 1 where kode_tiket = ?', [$_POST['kode_tiket']]);
+            return response()->json(['status' => true, 'message' => 'Vote telah direkam'], 200);
+        }
+    }
+    return response()->json(['message' => 'Kode tiket tidak ditemukan', 'kode_tiket' => $_POST['kode_tiket']], 404);
+
+})->name('submitvotesing');
+
+// END ROUTE VOTE SING
+
+// ROUTE VOTE DRAW
+Route::get('/itmatsuri/vote/draw', function(){
+    return view('vote.drawing', [
+        // 'data' => PesertaVoteDraw::all()
+    ]);
+});
+
+Route::post('/submitvotedraw', function (Request $request) {
+    $hasil = DB::select('select * from tiket where kode_tiket = :kode_tiket', ['kode_tiket' => $_POST['kode_tiket']]);
+    if ($hasil) {
+        if ($hasil[0]->status_draw == 1) {
+            return response()->json(['status' => false, 'message' => 'Kode Telah digunakan'], 200);
+        } else {
+            // update DB tiket and peserta_voting
+            DB::update('update peserta_vote_draws set jumlah_vote = jumlah_vote + 1 where id = ?', [$_POST['vote']]);
+            DB::update('update tiket set status = 1 where kode_tiket = ?', [$_POST['kode_tiket']]);
+            return response()->json(['status' => true, 'message' => 'Vote telah direkam'], 200);
+        }
+    }
+    return response()->json(['message' => 'Kode tiket tidak ditemukan', 'kode_tiket' => $_POST['kode_tiket']], 404);
+
+})->name('submitvotedraw');
+
+// END ROUTE VOTE DRAW
+
+// ROUTE VOTE COSPLAY
+Route::get('/itmatsuri/vote/cosplay', function(){
+    return view('vote.cosplay', [
+        'data' => PesertaVoteSing::all()
+    ]);
+});
+
+Route::post('/submitvotecosplay', function (Request $request) {
+    $hasil = DB::select('select * from tiket where kode_tiket = :kode_tiket', ['kode_tiket' => $_POST['kode_tiket']]);
+    if ($hasil) {
+        if ($hasil[0]->status == 1) {
+            return response()->json(['status' => false, 'message' => 'Kode Telah digunakan'], 200);
+        } else {
+            // update DB tiket and peserta_voting
+            DB::update('update peserta_vote_cosplays set jumlah_vote = jumlah_vote + 1 where id = ?', [$_POST['vote']]);
+            DB::update('update tiket set status = 1 where kode_tiket = ?', [$_POST['kode_tiket']]);
+            return response()->json(['status' => true, 'message' => 'Vote telah direkam'], 200);
+        }
+    }
+    return response()->json(['message' => 'Kode tiket tidak ditemukan', 'kode_tiket' => $_POST['kode_tiket']], 404);
+
+})->name('submitvotecosplay');
+
+// END ROUTE VOTE COSPLAY
+
+Route::get('/itmatsuri/vote/drawing', function(){
+    return view('vote.drawing');
 });
 
 
@@ -166,14 +247,41 @@ Route::post('/uppeserta', function (Request $request) {
         ->with('berhasil', $request->nama . ' telah ditambahkan');
 })->name('upadmin');
 
+// ADMIN PESERTA SING
+
+Route::post('/uppesertasing', function (Request $request) {
+    $request->validate([
+        'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        'nama' => 'required|string',
+        "nomor" => "required|numeric|min:1|unique:peserta_vote_sings"
+    ]);
+    // dd($request->all());
+
+    $imageName = 'lomba_sing' . time() . '.' . $request->foto->extension();
+
+    $request->foto->move(public_path('images-sing'), $imageName);
+
+    PesertaVoteSing::create([
+        'nama' => $request->nama,
+        'foto' => $imageName,
+        'nomor' => $request->nomor
+    ]);
+    return back()
+        ->with('berhasil', $request->nama . ' telah ditambahkan');
+})->name('tambahpesertasing');
+
+Route::get('/admin/pesertasing', function () {
+    return view('admin.pesertasing');
+})->middleware('auth')->name('pesertasing');
 
 
 // Route admin
 Route::get('/admin', function () {
-    return view('admin.admin');
+    return view('admin.index');
 })->middleware('auth')->name('halamanAdmin');
-Route::get('/admintiket', function () {
 
+
+Route::get('/admintiket', function () {
     return view('admin.tiket', ['data' => ListTiket::all()]);
 })->middleware('auth')->name('admintiket');
 
