@@ -36,13 +36,16 @@
         <div class="w-[calc(100%_-_10rem)] mx-auto rounded bg-itmprimary py-5">
             <img src="{{ asset('img/logo2.png') }}" alt="" class="mx-auto rounded-full mb-2">
             <h6 class="text-xl text-center"> CHOOSE YOUR FAVORITE SINGER</h6>
+            <div class=" w-full  mx-auto text-center my-2">
+                <a class=" bg-itmfourth px-3 py-2 rounded " href="/itmatsuri/vote/sing/hasil">Pemenang</a>
+            </div>
         </div>
         <div class="w-[calc(100%_-_2rem)] lg:w-[calc(100%_-_10rem)] mx-auto mt-5">
-            <form>
+            <form novalidate>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mx-3">
                     @foreach ($data as $item)
                         <div class=" shadow max-w-md">
-                            <input type="radio" name="vote"value="{{ $item->id }}" id="{{ $item->id }}"
+                            <input type="radio" name="vote" value="{{ $item->id }}" id="{{ $item->id }}"
                                 required="required" />
                             <label for="{{ $item->id }}" class="cursor-pointer">
 
@@ -52,7 +55,7 @@
                                             class="w-full">
                                     </div>
                                     <div class="text-center">
-                                        <p class="font-bold py-6">Id Peserta : {{ $item->id }}</p>
+                                        <p class="font-bold py-6">Nomor Peserta : {{ $item->nomor }}</p>
                                         <P class="font-semibold py-3">{{ $item->nama }}</P>
 
                                     </div>
@@ -60,72 +63,6 @@
                             </label>
                         </div>
                     @endforeach
-                    <div class="shadow max-w-md">
-                        <input type="radio" name="vote" class="" value="2" id="2"
-                            required="required" />
-                        <label for="2" class="cursor-pointer">
-
-                            <div class="">
-                                <div class="max-w-md">
-                                    <img src="https://via.placeholder.com/600x300" class="w-full" alt="">
-                                </div>
-                                <div class="text-center">
-                                    <p class="font-bold py-6">NO_PESERTA</p>
-                                    <P class="font-semibold py-3">Nama_PESERTA</P>
-
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class=" shadow max-w-md">
-                        <div class="">
-                            <div class="max-w-md">
-                                <img src="https://via.placeholder.com/600x300" class="w-full" alt="">
-                            </div>
-                            <div class="text-center">
-                                <p class="font-bold py-6">NO_PESERTA</p>
-                                <P class="font-semibold py-3">Nama_PESERTA</P>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" shadow max-w-md">
-                        <div class="">
-                            <div class="max-w-md">
-                                <img src="https://via.placeholder.com/600x300" class="w-full" alt="">
-                            </div>
-                            <div class="text-center">
-                                <p class="font-bold py-6">NO_PESERTA</p>
-                                <P class="font-semibold py-3">Nama_PESERTA</P>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" shadow max-w-md">
-                        <div class="">
-                            <div class="max-w-md">
-                                <img src="https://via.placeholder.com/600x300" class="w-full" alt="">
-                            </div>
-                            <div class="text-center">
-                                <p class="font-bold py-6">NO_PESERTA</p>
-                                <P class="font-semibold py-3">Nama_PESERTA</P>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" shadow max-w-md">
-                        <div class="">
-                            <div class="max-w-md">
-                                <img src="https://via.placeholder.com/600x300" class="w-full" alt="">
-                            </div>
-                            <div class="text-center">
-                                <p class="font-bold py-6">NO_PESERTA</p>
-                                <P class="font-semibold py-3">Nama_PESERTA</P>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="w-full flex  bg-itmfourth sticky bottom-0">
                     <input name="kode_tiket" type="text" class="w-2/3 m-2 rounded-3xl px-3 outline-none"
@@ -172,9 +109,19 @@
     <script>
         $(document).ready(function() {
 
+
             $('form').on('submit', function(e) {
 
                 e.preventDefault();
+                // if An invalid form control with name='vote' is not focusable return sweet alert error
+                if ($('input[name=vote]:checked').length == 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Pastikan kamu udah pilih peserta dan memasukkan kode tiket dengan benar!',
+                    })
+                    return false;
+                }
 
                 let formData = {
                     'kode_tiket': $('input[name=kode_tiket]').val(),
@@ -185,7 +132,7 @@
                         .children('p')[1].innerText,
                     '_token': '{{ csrf_token() }}'
                 };
-                if (!formData.kode_tiket) return;
+
                 $('button[type=submit]').hide();
                 $('#loading').show();
 
@@ -222,9 +169,28 @@
                                     customClass: {
                                         icon: 'no-border',
                                     },
-                                    background: '#ea00ffca',
+                                    background: '#ff8dc7',
                                     color: "#fff",
                                     text: data['message'],
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: "#ffc600"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // show button and hide loading
+                                        $('button[type=submit]').show();
+                                        $('#loading').hide();
+                                    }
+                                });
+                            }
+                            if (!data['status']) {
+                                // trigger sweet alert
+                                Swal.fire({
+                                    title: "Gagal",
+                                    icon: 'error',
+                                    background: '#ff8dc7',
+                                    color: "#fff",
+                                    text: data['message'] +
+                                        " Kamu hanya dapat vote 1 kali.",
                                     confirmButtonText: 'OK',
                                     confirmButtonColor: "#ffc600"
                                 }).then((result) => {
@@ -239,24 +205,24 @@
                             console.log("gagal submit");
                             console.log(data);
                             // trigger sweet alert
-                            Swal.fire({
-                                title: "Gagal",
-                                iconHtml: '<img src="{{ asset('assets/IO-pose2.png') }}">',
-                                customClass: {
-                                    icon: 'no-border',
-                                },
-                                background: '#ea00ffca',
-                                color: "#fff",
-                                text: data['message'],
-                                confirmButtonText: 'OK',
-                                confirmButtonColor: "#ffc600"
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // show button and hide loading
-                                    $('button[type=submit]').show();
-                                    $('#loading').hide();
-                                }
-                            });
+                            if (data['status'] == 404) {
+                                Swal.fire({
+                                    title: "Gagal",
+                                    icon: 'error',
+                                    background: '#ff8dc7',
+                                    color: "#fff",
+                                    text: "Kode tiket tidak ditemukan!",
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: "#ffc600"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // show button and hide loading
+                                        $('button[type=submit]').show();
+                                        $('#loading').hide();
+
+                                    }
+                                });
+                            }
                         });
                     } else {
                         // show submit button
@@ -272,20 +238,6 @@
             });
 
         });
-
-
-        // // close info
-        // const closeInfo = document.getElementById("close-info");
-        // const info = document.getElementById("info");
-        // const openInfo = document.getElementById("open-info");
-        // closeInfo.onclick = function() {
-        //     info.style.display = "none";
-        //     openInfo.style.display = "flex";
-        // };
-        // openInfo.onclick = function() {
-        //     info.style.display = "block";
-        //     openInfo.style.display = "none";
-        // };
     </script>
 
 </body>

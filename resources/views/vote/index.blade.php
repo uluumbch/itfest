@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IT MATSURI | Vote</title>
 
-    <!-- jquery validation -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
     @vite('resources/css/app.css')
 
@@ -36,7 +34,7 @@
                     <h4 class="my-auto px-3 text-3xl font-semibold">Singing </h4>
                 </a>
 
-                <a href="/itmatsuri/vote/sing"
+                <a href="/itmatsuri/vote/draw"
                     class="bg-itmfourth rounded-full my-auto p-2 flex max-w-md justify-evenly">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -48,7 +46,7 @@
                     <h4 class="my-auto px-3 text-3xl font-semibold">Drawing </h4>
                 </a>
 
-                <a href="/itmatsuri/vote/sing"
+                <a href="/itmatsuri/vote/cosplay"
                     class="bg-itmfourth rounded-full my-auto p-2 flex max-w-md justify-evenly">
                     <div class="">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"

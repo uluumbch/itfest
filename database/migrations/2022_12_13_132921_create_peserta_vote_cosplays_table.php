@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nomor');
             $table->string('nama');
             $table->string('gambar');
+            $table->integer('jumlah_vote',false)->default(0);
             $table->timestamps();
         });
     }

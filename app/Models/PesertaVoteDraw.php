@@ -9,5 +9,5 @@ class PesertaVoteDraw extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama','nama_gambar','desc','gambar', 'jumlah_vote',];
+    protected $fillable = ['nama','nama_gambar','desc','gambar', 'jumlah_vote','nomor'];
 }

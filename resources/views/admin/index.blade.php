@@ -7,10 +7,11 @@
                 <a href="admin/pesertasing">Singing Contest</a>
             </li>
             <li class="text-xl mx-auto text-center border border-secondarydarker my-2 max-w-md">
-                <a href="">Drawing
+                <a href="admin/pesertadraw">Drawing
                     Contest</a>
             </li>
-            <li class="text-xl mx-auto text-center border border-secondarydarker my-2 max-w-md"><a href="">Cosplay
+            <li class="text-xl mx-auto text-center border border-secondarydarker my-2 max-w-md">
+                <a href="admin/pesertacosplay">Cosplay
                     Contest</a>
             </li>
         </ul>

@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
+        DB::table('tiket')->insert([
+                    'kode_tiket' => 'asasas'
+                ]);
+
         User::create([
             'username' => "ITFEST22",
             'email' => "hmti.ft@ulm.ac.id",
