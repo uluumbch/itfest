@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IT MATSURI | Favorite Singer</title>
+    <title>IT MATSURI | Favorite Cosplayer</title>
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -14,18 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.33/dist/sweetalert2.all.min.js"></script>
 
     @vite('resources/css/app.css')
-    <style>
-        input[type="radio"] {
-            display: none;
-        }
 
-
-
-        input[type="radio"]:checked+label>div {
-            border: 3px solid #ff8dc7;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -48,7 +37,7 @@
                                     </svg>
                                 </div>
                                 <div class="max-w-md">
-                                    <img src="{{ asset('images-sing/' . $item->foto) }}" alt="{{ $item->nama }}"
+                                    <img src="{{ asset('images-cosplay/' . $item->gambar) }}" alt="{{ $item->nama }}"
                                         class="w-full">
                                 </div>
                                 <div class="text-center">
@@ -70,11 +59,12 @@
                                     </svg>
                                 </div>
                                 <div class="max-w-md">
-                                    <img src="{{ asset('images-sing/' . $item->foto) }}" alt="{{ $item->nama }}"
+
+                                    <img src="{{ asset('images-cosplay/' . $item->gambar) }}" alt="{{ $item->nama }}"
                                         class="w-full">
                                 </div>
                                 <div class="text-center">
-                                    <p class="font-bold py-6">No. Peserta : {{ $item->id }}</p>
+                                    <p class="font-bold py-6">No. Peserta : {{ $item->nomor }}</p>
                                     <P class="font-semibold py-3">{{ $item->nama }}</P>
                                     <P class="font-medium py-3">{{ $item->jumlah_vote }} Vote</P>
 
@@ -92,8 +82,8 @@
                                     </svg>
                                 </div>
                                 <div class="max-w-md">
-                                    <img src="{{ asset('images-sing/' . $item->foto) }}" alt="{{ $item->nama }}"
-                                        class="w-full">
+                                    <img src="{{ asset('images-cosplay/' . $item->gambar) }}"
+                                        alt="{{ $item->nama }}" class="w-full">
                                 </div>
                                 <div class="text-center">
                                     <p class="font-bold py-6">No. Peserta : {{ $item->id }}</p>
@@ -107,8 +97,8 @@
                         <div class=" shadow max-w-md">
                             <div class="">
                                 <div class="max-w-md">
-                                    <img src="{{ asset('images-sing/' . $item->foto) }}" alt="{{ $item->nama }}"
-                                        class="w-full">
+                                    <img src="{{ asset('images-cosplay/' . $item->gambar) }}"
+                                        alt="{{ $item->nama }}" class="w-full">
                                 </div>
                                 <div class="text-center">
                                     <p class="font-bold py-6">No. Peserta : {{ $item->id }}</p>

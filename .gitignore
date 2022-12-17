@@ -16,3 +16,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# ignore file inside images folder
+/public/images/*
+/public/images-cosplay/*
+/public/images-sing/*
+

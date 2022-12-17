@@ -151,6 +151,12 @@ Route::get('/itmatsuri/vote/draw', function(){
     ]);
 });
 
+Route::get('/itmatsuri/vote/draw/hasil', function(){
+    return view('vote.hasil-draw', [
+        'data' => PesertaVoteDraw::all()->sortByDesc('jumlah_vote')
+    ]);
+});
+
 Route::post('/submitvotedraw', function (Request $request) {
     $hasil = DB::select('select * from tiket where kode_tiket = :kode_tiket', ['kode_tiket' => $_POST['kode_tiket']]);
     if ($hasil) {
@@ -173,6 +179,12 @@ Route::post('/submitvotedraw', function (Request $request) {
 Route::get('/itmatsuri/vote/cosplay', function(){
     return view('vote.cosplay', [
         'data' => PesertaVoteCosplay::all()
+    ]);
+});
+
+Route::get('/itmatsuri/vote/cosplay/hasil', function(){
+    return view('vote.hasil-cosplay', [
+        'data' => PesertaVoteCosplay::all()->sortByDesc('jumlah_vote')
     ]);
 });
 

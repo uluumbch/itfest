@@ -36,7 +36,7 @@
             <img src="<?php echo e(asset('img/logo2.png')); ?>" alt="" class="mx-auto rounded-full mb-2">
             <h6 class="text-xl text-center"> CHOOSE YOUR FAVORITE COSPLAYER</h6>
             <div class=" w-full  mx-auto text-center my-2">
-                <a class=" bg-itmfourth px-3 py-2 rounded " href="/itmatsuri/vote/draw/hasil">Pemenang</a>
+                <a class=" bg-itmfourth px-3 py-2 rounded " href="/itmatsuri/vote/cosplay/hasil">Pemenang</a>
             </div>
         </div>
         <div class="w-[calc(100%_-_2rem)] lg:w-[calc(100%_-_10rem)] mx-auto mt-5">
